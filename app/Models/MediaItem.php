@@ -8,7 +8,7 @@ class MediaItem extends Model
 {
     public function children()
     {
-        return $this->hasMany(MediaItem::class, 'parent_id');
+        return $this->hasMany(self::class, 'parent_id');
     }
 
     public function metaSources()

@@ -21,14 +21,15 @@ class authJWT
         try {
             $user = \JWTAuth::toUser($request->input('token'));
         } catch (Exception $e) {
-            if ($e instanceof TokenInvalidException){
+            if ($e instanceof TokenInvalidException) {
                 return response()->json(['error'=>'Token is Invalid']);
-            }else if ($e instanceof TokenExpiredException){
+            } elseif ($e instanceof TokenExpiredException) {
                 return response()->json(['error'=>'Token is Expired']);
-            }else{
+            } else {
                 return response()->json(['error'=>'Something is wrong']);
             }
         }
+
         return $next($request);
     }
 }
