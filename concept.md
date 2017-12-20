@@ -57,7 +57,7 @@ __Models__
   - network (e.a. Marvels) (string) 
 - MetaSource
   - implementation (string)
-  - id (string)
+  - meta_id (string)
   - MediaItemId (int, fk media_items.id)
 - File
   - media_item_id (int, fk media_items.id)
@@ -73,7 +73,7 @@ __Models__
   - title (string)
   - publishDate (date)
   - size (int)
-  - approved (bool)
+  - blacklisted (bool)
   - commentUrl (string)
   - downloadUrl (string)
   - infoUrl (string)

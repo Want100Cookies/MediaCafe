@@ -114,3 +114,4 @@ fabric.properties
 .idea/
 
 # End of https://www.gitignore.io/api/angular,laravel,phpstorm+all
+_ide_helper\.php
