@@ -2,13 +2,13 @@
 
 This document provides early insight into the ideas for this application.
 
-The MediaCafe Application is a web application that manages a full TV Series and Movies library. 
+The MediaCafe Application is a web application that manages a full TV Series, Movies and Music library. 
 
 __Features__
 - Scan existing files for import into library
-- Retrieve metadata from thetvdb and themoviedb
-- Add new series and movies to your library
-- Episodes or movies not on disk can be searched for on Torrent sites using [TorrentPotato](https://github.com/RuudBurger/CouchPotatoServer/wiki/Couchpotato-torrent-provider) API
+- Retrieve metadata from thetvdb, themoviedb and theaudiodb
+- Add new shows, movies and music to your library
+- Tracks, Episodes or movies not on disk can be searched for on Torrent sites using [TorrentPotato](https://github.com/RuudBurger/CouchPotatoServer/wiki/Couchpotato-torrent-provider) API
 - Auto download above mentioned media if found available through RSS feeds from [TorrentPotato](https://github.com/RuudBurger/CouchPotatoServer/wiki/Couchpotato-torrent-provider)
 - Push the torrents to an compatible torrent program (e.a. transmission)
 - Once the torrent completes move/copy/hardlink to the corresponding folder
@@ -16,12 +16,14 @@ __Features__
 - Rename movies/episoded to provided format
 - Push notification to several services to notify of on-grap/on-download/on-rename/on-upgrade
 - Calendar functionality containing all releases of episodes and movies
+- Auto add to library using last.fm
 
 __Screens__
 - Library overview
   - Series
   - Movies
-  - Add (both series/movies but filter is possible)
+  - Music
+  - Add
 - Calendar
 - Activity (showing currently downloading and failed downloads)
 - Wanted
@@ -40,57 +42,34 @@ __Screens__
   - System
 
 __Models__
-- Movie
-  - title (string) 
-  - titleSlug (string) 
-  - description (string) 
-  - year (int)
-  - genre (string)
-  - quality_id (int)
-  - moviedbid (string)
-  - imdbid (string)
-- Serie
-  - title (string) 
-  - titleSlug (string) 
-  - description (string) 
-  - year (int)
-  - path (string) 
-  - genre (string)
-  - quality_id (int)
-  - episodeCount (int)
-  - sizeOnDisk (int)
-  - network (e.a. Marvels) (string) 
-  - tvdbid (string) 
-  - tvmazeid (string) 
-  - imdbid (string) 
-- Season
-  - serie_id (int)
-  - quality_id (int)
-  - title (string) 
-  - number (int)
-  - monitored (bool)
-  - sizeOnDisk (int)
-- Episode
-  - season_id (int)
+- MediaItem
   - title (string)
+  - slug (string, unique)
+  - type (movie, show, season, episode, artist, album, cd, track) (string)
+  - parent_id (int, fk media_items.id)
   - number (int)
-  - airDate (date)
-  - monitored (bool)
-- File
-  - polymorphic relation
-    - fileable_id (int)
-    - fileable_type (string)
+  - description (string)
+  - airDate (datetime)
+  - genre (string)
   - quality_id (int)
+  - monitored (bool)
+  - path (string)
+  - network (e.a. Marvels) (string) 
+- MetaSource
+  - implementation (string)
+  - id (string)
+  - MediaItemId (int, fk media_items.id)
+- File
+  - media_item_id (int, fk media_items.id)
+  - quality_id (int, fk qualities.id)
   - relativePath (string)
   - path (string)
   - sizeOnDisk (int)
   - dateAdded (date)
 - Torrent
-  - polymorphic relation
-    - torrentable_id (int)
-    - torrentable_type (string) (can be movie/episode/season)
-  - quality_id (int)
-  - indexer_id (int)
+  - media_item_id (int, fk media_items.id)
+  - quality_id (int, fk qualities.id)
+  - indexer_id (int, fk indexers.id)
   - title (string)
   - publishDate (date)
   - size (int)
@@ -107,4 +86,14 @@ __Models__
   - implementation (string)
   - settings (json)
 - Quality
-  - weight
+  - title (string)
+  - type (movie, show, season, episode, artist, album, cd, track) (string)
+  - weight (int)
+  - minSize (int)
+  - maxSize (int)
+- Profile
+  - title (string)
+  - type (movie, show, season, episode, artist, album, cd, track) (string)
+  - language (string)
+  - cutoff_id (int, fk qualities.id)
+  - qualities (many-many)
