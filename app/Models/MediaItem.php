@@ -2,10 +2,58 @@
 
 namespace App\Models;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
+/** @mixin \Eloquent */
 class MediaItem extends Model
 {
+    use Sluggable;
+
+    const movieType = "movie";
+    const showType = "show";
+    const seasonType = "season";
+    const episodeType = "episode";
+    const artistType = "artist";
+    const albumType = "album";
+    const songType = "song";
+
+    protected $fillable = [
+        "title",
+        "type",
+        "airDate",
+        "description",
+        "network",
+        "genre",
+        "path",
+        "monitored",
+        "profile_id",
+        "metaSources",
+        "children",
+    ];
+
+    public static function allTypes()
+    {
+        return [
+            self::movieType,
+            self::showType,
+            self::seasonType,
+            self::episodeType,
+            self::artistType,
+            self::albumType,
+            self::songType,
+        ];
+    }
+
+    public static function mainTypes()
+    {
+        return [
+            self::movieType,
+            self::showType,
+            self::artistType,
+        ];
+    }
+
     public function children()
     {
         return $this->hasMany(self::class, 'parent_id');
@@ -29,5 +77,32 @@ class MediaItem extends Model
     public function torrents()
     {
         return $this->hasMany(Torrent::class);
+    }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'title'
+            ]
+        ];
+    }
+
+    public function setMetaSourcesAttribute($metaSources)
+    {
+        if ($this->exists) {
+            foreach ($metaSources as $data) {
+                $this->metaSources()->create($data);
+            }
+        }
+    }
+
+    public function setChildrenAttribute($children)
+    {
+        if ($this->exists) {
+            foreach ($children as $data) {
+                $this->children()->create($data);
+            }
+        }
     }
 }

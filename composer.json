@@ -6,11 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "cviebrock/eloquent-sluggable": "^4.3",
         "doctrine/dbal": "^2.6",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
-        "php-tmdb/laravel": "^1.1",
+        "php-tmdb/laravel": "1.1.0",
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {

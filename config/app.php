@@ -167,6 +167,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Tmdb\Laravel\TmdbServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -227,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
+        'Tmdb' => Tmdb\Laravel\Facades\Tmdb::class,
     ],
 
 ];

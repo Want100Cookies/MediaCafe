@@ -39,4 +39,9 @@ class ApiController extends Controller
 
         return response()->json(['result' => $user]);
     }
+
+    public function foo()
+    {
+        return \Tmdb::getTvApi()->getTvshow(44217);
+    }
 }

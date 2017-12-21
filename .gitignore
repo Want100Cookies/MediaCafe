@@ -44,6 +44,7 @@ app/storage/
 public/storage
 public/hot
 storage/*.key
+storage/**/*.data
 .env.*.php
 .env.php
 .env

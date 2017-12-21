@@ -30,8 +30,8 @@ class CreateMediaItemsTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('media_items');
 
-//            $table->integer('profile_id')->unsigned();
-//            $table->foreign('profile_id')->references('id')->on('profiles');
+            $table->integer('profile_id')->unsigned();
+            $table->foreign('profile_id')->references('id')->on('profiles');
 
             $table->timestamps();
         });
