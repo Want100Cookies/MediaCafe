@@ -17,6 +17,6 @@ Route::group(['middleware' => ['api']], function () {
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::get('user', 'ApiController@getAuthUser');
 
-        Route::apiResource("media-items", "MediaItemController");
+        Route::apiResource('media-items', 'MediaItemController');
     });
 });

@@ -2,41 +2,41 @@
 
 namespace App\Models;
 
-use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 /** @mixin \Eloquent */
 class MediaItem extends Model
 {
     use Sluggable;
 
-    const movieType = "movie";
-    const showType = "show";
-    const seasonType = "season";
-    const episodeType = "episode";
-    const artistType = "artist";
-    const albumType = "album";
-    const songType = "song";
+    const movieType = 'movie';
+    const showType = 'show';
+    const seasonType = 'season';
+    const episodeType = 'episode';
+    const artistType = 'artist';
+    const albumType = 'album';
+    const songType = 'song';
 
     protected $fillable = [
-        "title",
-        "type",
-        "number",
-        "airDate",
-        "description",
-        "network",
-        "genre",
-        "path",
-        "monitored",
-        "profile_id",
-        "metaSources",
-        "children",
+        'title',
+        'type',
+        'number',
+        'airDate',
+        'description',
+        'network',
+        'genre',
+        'path',
+        'monitored',
+        'profile_id',
+        'metaSources',
+        'children',
     ];
 
     protected $dates = [
-        "airDate",
-        "created_at",
-        "updated_at",
+        'airDate',
+        'created_at',
+        'updated_at',
     ];
 
     public static function allTypes()
@@ -90,14 +90,14 @@ class MediaItem extends Model
     {
         return [
             'slug' => [
-                'source' => 'title'
-            ]
+                'source' => 'title',
+            ],
         ];
     }
 
     public function setMetaSourcesAttribute($metaSources)
     {
-        if ( ! $this->exists) {
+        if (! $this->exists) {
             $this->save();
         }
 
@@ -108,7 +108,7 @@ class MediaItem extends Model
 
     public function setChildrenAttribute($children)
     {
-        if ( ! $this->exists) {
+        if (! $this->exists) {
             $this->save();
         }
 

@@ -18,35 +18,35 @@ class TheMovieDBSource implements IMetaSource
 
     public function getUrl($metaId)
     {
-        return "https://www.themoviedb.org/movie/" . $metaId;
+        return 'https://www.themoviedb.org/movie/'.$metaId;
     }
 
     public function mediaItemFactory($metaData, $additional = [])
     {
         return [
-            "title" => $metaData["title"],
-            "type" => MediaItem::movieType,
-            "airDate" => $metaData["release_date"],
-            "description" => $metaData["overview"],
-            "network" => implode(array_column($metaData["production_companies"], "name"), ", "),
-            "genre" => implode(array_column($metaData["genres"], "name"), ", "),
-            "path" => "/" . $metaData["title"] . "/",
+            'title' => $metaData['title'],
+            'type' => MediaItem::movieType,
+            'airDate' => $metaData['release_date'],
+            'description' => $metaData['overview'],
+            'network' => implode(array_column($metaData['production_companies'], 'name'), ', '),
+            'genre' => implode(array_column($metaData['genres'], 'name'), ', '),
+            'path' => '/'.$metaData['title'].'/',
         ];
     }
 
     public function metaSourceFactory($metaData)
     {
         return [
-            "metaSources" => [
+            'metaSources' => [
                 [
-                    "implementation" => self::class,
-                    "meta_id" => $metaData["id"],
+                    'implementation' => self::class,
+                    'meta_id' => $metaData['id'],
                 ],
                 [
-                    "implementation" => IMDBSource::class,
-                    "meta_id" => $metaData["imdb_id"],
-                ]
-            ]
+                    'implementation' => IMDBSource::class,
+                    'meta_id' => $metaData['imdb_id'],
+                ],
+            ],
         ];
     }
 

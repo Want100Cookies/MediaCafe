@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\CreateMediaItem;
 use App\Models\MediaItem;
 use Illuminate\Http\Request;
+use App\Jobs\CreateMediaItem;
 
 class MediaItemController extends Controller
 {
@@ -19,7 +19,7 @@ class MediaItemController extends Controller
     {
         $type = $request->query('type');
 
-        abort_if(! in_array($type, MediaItem::mainTypes()), 404, "Type not found");
+        abort_if(! in_array($type, MediaItem::mainTypes()), 404, 'Type not found');
 
         return response()->success(MediaItem::where('type', $type)->paginate());
     }
@@ -39,7 +39,7 @@ class MediaItemController extends Controller
             'profile_id' => 'required|exists:profiles,id',
         ]);
 
-        abort_if(!class_exists($data['implementation']), 403, "Class does not exist!");
+        abort_if(! class_exists($data['implementation']), 403, 'Class does not exist!');
 
         CreateMediaItem::dispatch($data);
 
@@ -71,13 +71,13 @@ class MediaItemController extends Controller
         $data = $request->validate([
             'profile_id' => 'sometimes,exists:profiles,id',
             'monitored' => 'sometimes|boolean',
-            'path' => 'sometimes|string'
+            'path' => 'sometimes|string',
         ]);
 
         if ($mediaItem->update($data)) {
             return response(null, 204);
         } else {
-            return response("Something went wrong", 500);
+            return response('Something went wrong', 500);
         }
     }
 
@@ -94,7 +94,7 @@ class MediaItemController extends Controller
         if ($mediaItem->delete()) {
             return response(null, 204);
         } else {
-            return response("Something went wrong", 500);
+            return response('Something went wrong', 500);
         }
     }
 }

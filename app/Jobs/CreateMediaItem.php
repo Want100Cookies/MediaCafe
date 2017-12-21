@@ -2,9 +2,9 @@
 
 namespace App\Jobs;
 
-use App\MetaSources\IMetaSource;
 use App\Models\MediaItem;
 use Illuminate\Bus\Queueable;
+use App\MetaSources\IMetaSource;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -25,9 +25,9 @@ class CreateMediaItem implements ShouldQueue
      */
     public function __construct($data)
     {
-        $this->metaId = $data["meta_id"];
-        $this->implementation = $data["implementation"];
-        $this->profileId = $data["profile_id"];
+        $this->metaId = $data['meta_id'];
+        $this->implementation = $data['implementation'];
+        $this->profileId = $data['profile_id'];
     }
 
     /**
@@ -39,15 +39,15 @@ class CreateMediaItem implements ShouldQueue
     public function handle()
     {
         $source = new $this->implementation();
-        if ( ! $source instanceof IMetaSource) {
-            $this->fail(new \Exception("Implementation does not implement IMetaSource!"));
+        if (! $source instanceof IMetaSource) {
+            $this->fail(new \Exception('Implementation does not implement IMetaSource!'));
         }
 
         $metaData = $source->getMetaData($this->metaId);
 
         $additional = [
-            "profile_id" => $this->profileId,
-            "monitored" => true,
+            'profile_id' => $this->profileId,
+            'monitored' => true,
         ];
 
         \DB::transaction(function () use ($source, $metaData, $additional) {

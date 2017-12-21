@@ -20,18 +20,17 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $quality = new \App\Models\Quality();
-        $quality->title = "HD";
+        $quality->title = 'HD';
         $quality->type = \App\Models\MediaItem::movieType;
         $quality->minSize = 0;
         $quality->maxSize = 1500;
         $quality->save();
 
         $profile = new \App\Models\Profile();
-        $profile->title = "Any";
+        $profile->title = 'Any';
         $profile->type = \App\Models\MediaItem::movieType;
-        $profile->language = "english";
+        $profile->language = 'english';
         $profile->cutoff_id = $quality->id;
         $profile->save();
-
     }
 }

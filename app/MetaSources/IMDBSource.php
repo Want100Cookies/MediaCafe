@@ -16,7 +16,7 @@ class IMDBSource implements IMetaSource
 
     public function getUrl($metaId)
     {
-        return "https://www.imdb.com/title/" . $metaId;
+        return 'https://www.imdb.com/title/'.$metaId;
     }
 
     public function mediaItemFactory($metaData, $additional = [])

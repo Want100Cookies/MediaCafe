@@ -1,4 +1,6 @@
-<?php namespace App\MetaSources;
+<?php
+
+namespace App\MetaSources;
 
 interface IMetaSource
 {

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class MetaSource extends Model
 {
     protected $fillable = [
-        "implementation",
-        "meta_id",
+        'implementation',
+        'meta_id',
     ];
 }
