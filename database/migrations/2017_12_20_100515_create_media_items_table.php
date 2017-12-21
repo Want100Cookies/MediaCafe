@@ -17,15 +17,15 @@ class CreateMediaItemsTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('type');
-            $table->dateTime('airDate');
 
+            $table->dateTime('airDate')->nullable();
             $table->unsignedInteger('number')->nullable();
             $table->text('description')->nullable();
             $table->string('network')->nullable();
             $table->string('genre')->nullable();
 
             $table->boolean('monitored');
-            $table->string('path');
+            $table->string('path')->nullable();
 
             $table->integer('parent_id')->unsigned()->nullable();
             $table->foreign('parent_id')->references('id')->on('media_items');

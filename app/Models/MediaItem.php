@@ -21,6 +21,7 @@ class MediaItem extends Model
     protected $fillable = [
         "title",
         "type",
+        "number",
         "airDate",
         "description",
         "network",
@@ -30,6 +31,12 @@ class MediaItem extends Model
         "profile_id",
         "metaSources",
         "children",
+    ];
+
+    protected $dates = [
+        "airDate",
+        "created_at",
+        "updated_at",
     ];
 
     public static function allTypes()
@@ -90,19 +97,23 @@ class MediaItem extends Model
 
     public function setMetaSourcesAttribute($metaSources)
     {
-        if ($this->exists) {
-            foreach ($metaSources as $data) {
-                $this->metaSources()->create($data);
-            }
+        if ( ! $this->exists) {
+            $this->save();
+        }
+
+        foreach ($metaSources as $data) {
+            $this->metaSources()->create($data);
         }
     }
 
     public function setChildrenAttribute($children)
     {
-        if ($this->exists) {
-            foreach ($children as $data) {
-                $this->children()->create($data);
-            }
+        if ( ! $this->exists) {
+            $this->save();
+        }
+
+        foreach ($children as $data) {
+            $this->children()->create($data);
         }
     }
 }

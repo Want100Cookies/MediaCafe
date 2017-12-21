@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\MetaSources\IMetaSource;
+use App\MetaSources\TheTVDBSource;
+use App\Models\MediaItem;
+use App\Models\Profile;
+use Dawson\TVDB\TVDBClient;
 use Illuminate\Http\Request;
+use Imdb\Title;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class ApiController extends Controller
@@ -12,7 +18,7 @@ class ApiController extends Controller
         $credentials = $request->only('email', 'password');
         $token = null;
         try {
-            if (! $token = \JWTAuth::attempt($credentials)) {
+            if ( ! $token = \JWTAuth::attempt($credentials)) {
                 return response()->json([
                     'response' => 'error',
                     'message' => 'invalid_email_or_password',
@@ -42,6 +48,8 @@ class ApiController extends Controller
 
     public function foo()
     {
-        return \Tmdb::getTvApi()->getTvshow(44217);
+        $source = new TheTVDBSource();
+
+        return $source->getMetaData("78901");
     }
 }

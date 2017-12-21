@@ -34,6 +34,7 @@ class CreateMediaItem implements ShouldQueue
      * Execute the job.
      *
      * @throws \Exception
+     * @throws \Throwable
      */
     public function handle()
     {
@@ -44,13 +45,22 @@ class CreateMediaItem implements ShouldQueue
 
         $metaData = $source->getMetaData($this->metaId);
 
-        $mediaItem = MediaItem::create(array_merge(
-            $source->formatMetaData($metaData),
-            [
-                "profile_id" => $this->profileId,
-                "monitored" => true,
-            ]));
+        $additional = [
+            "profile_id" => $this->profileId,
+            "monitored" => true,
+        ];
 
-        $mediaItem->update($source->formatMetaRelations($metaData));
+        \DB::transaction(function () use ($source, $metaData, $additional) {
+            $mediaItem = MediaItem::create(
+                $source->mediaItemFactory($metaData, $additional)
+            );
+        });
+
+//        Todo: Fix duplicate key error from de DBMS
+
+//        $mediaItem->update(array_merge(
+//            $source->metaSourceFactory($metaData),
+//            $source->mediaChildFactory($metaData, $additional)
+//        ));
     }
 }

@@ -8,7 +8,9 @@ interface IMetaSource
 
     public function getUrl($metaId);
 
-    public function formatMetaData($metaData);
+    public function mediaItemFactory($metaData, $additional = []);
 
-    public function formatMetaRelations($metaData);
+    public function metaSourceFactory($metaData);
+
+    public function mediaChildFactory($metaData, $additional = []);
 }

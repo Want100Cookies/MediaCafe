@@ -2,8 +2,6 @@
 
 namespace App\MetaSources;
 
-use App\Models\MediaItem;
-
 class IMDBSource implements IMetaSource
 {
     public function search($input)
@@ -21,12 +19,17 @@ class IMDBSource implements IMetaSource
         return "https://www.imdb.com/title/" . $metaId;
     }
 
-    public function formatMetaData($metaData)
+    public function mediaItemFactory($metaData, $additional = [])
     {
         return [];
     }
 
-    public function formatMetaRelations($metaData)
+    public function metaSourceFactory($metaData)
+    {
+        return [];
+    }
+
+    public function mediaChildFactory($metaData, $additional = [])
     {
         return [];
     }

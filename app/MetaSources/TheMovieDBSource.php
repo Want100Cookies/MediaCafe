@@ -21,7 +21,7 @@ class TheMovieDBSource implements IMetaSource
         return "https://www.themoviedb.org/movie/" . $metaId;
     }
 
-    public function formatMetaData($metaData)
+    public function mediaItemFactory($metaData, $additional = [])
     {
         return [
             "title" => $metaData["title"],
@@ -34,7 +34,7 @@ class TheMovieDBSource implements IMetaSource
         ];
     }
 
-    public function formatMetaRelations($metaData)
+    public function metaSourceFactory($metaData)
     {
         return [
             "metaSources" => [
@@ -48,5 +48,10 @@ class TheMovieDBSource implements IMetaSource
                 ]
             ]
         ];
+    }
+
+    public function mediaChildFactory($metaData, $additional = [])
+    {
+        return [];
     }
 }
