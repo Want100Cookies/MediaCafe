@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\MetaSources\TheTVDBSource;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class ApiController extends Controller
