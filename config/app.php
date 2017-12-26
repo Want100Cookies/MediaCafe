@@ -229,6 +229,7 @@ return [
 
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'Tmdb' => Tmdb\Laravel\Facades\Tmdb::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

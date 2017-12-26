@@ -97,7 +97,7 @@ class MediaItem extends Model
 
     public function setMetaSourcesAttribute($metaSources)
     {
-        if (! $this->exists) {
+        if ($this->isDirty()) {
             $this->save();
         }
 
@@ -108,7 +108,7 @@ class MediaItem extends Model
 
     public function setChildrenAttribute($children)
     {
-        if (! $this->exists) {
+        if ($this->isDirty()) {
             $this->save();
         }
 

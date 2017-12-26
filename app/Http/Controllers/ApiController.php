@@ -43,8 +43,10 @@ class ApiController extends Controller
 
     public function foo()
     {
-        $source = new TheTVDBSource();
-
-        return $source->getMetaData('78901');
+        \App\Jobs\CreateMediaItem::dispatch([
+            'meta_id' => '78901',
+            'implementation' => 'App\MetaSources\TheTVDBSource',
+            'profile_id' => '1',
+        ]);
     }
 }

@@ -50,11 +50,13 @@ class CreateMediaItem implements ShouldQueue
             'monitored' => true,
         ];
 
-        \DB::transaction(function () use ($source, $metaData, $additional) {
-            $mediaItem = MediaItem::create(
-                $source->mediaItemFactory($metaData, $additional)
-            );
-        });
+        $mediaItemData = $source->mediaItemFactory($metaData, $additional);
+        \Debugbar::info($mediaItemData);
+        \DB::beginTransaction();
+
+        $mediaItem = MediaItem::create($mediaItemData);
+
+        \DB::rollBack();
 
 //        Todo: Fix duplicate key error from de DBMS
 

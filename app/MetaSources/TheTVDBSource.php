@@ -88,7 +88,8 @@ class TheTVDBSource implements IMetaSource
                         ]
                     );
                 })
-                ->values(), // Discard the keys
+                ->values()// Discard the keys
+                ->toArray(),
         ];
     }
 
@@ -110,7 +111,8 @@ class TheTVDBSource implements IMetaSource
                     ]
                 );
             })
-            ->values(); // Discard the keys
+            ->values() // Discard the keys
+            ->toArray();
     }
 
     protected function formatUtc($date)
