@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
-use Illuminate\Support\Collection;
 
 /** @mixin \Eloquent */
 class MediaItem extends Model
@@ -82,8 +82,8 @@ class MediaItem extends Model
     public function __construct(array $attributes = [])
     {
         $this->pendingRelations = [
-            "metaSources" => new Collection(),
-            "children" => new Collection(),
+            'metaSources' => new Collection(),
+            'children' => new Collection(),
         ];
 
         parent::__construct($attributes);
@@ -127,7 +127,7 @@ class MediaItem extends Model
     {
         if (! $this->exists) {
             foreach ($metaSources as $source) {
-                $this->pendingRelations["metaSources"]->push($source);
+                $this->pendingRelations['metaSources']->push($source);
             }
         } else {
             $this->metaSources()->createMany($metaSources);
@@ -138,7 +138,7 @@ class MediaItem extends Model
     {
         if (! $this->exists) {
             foreach ($children as $child) {
-                $this->pendingRelations["children"]->push($child);
+                $this->pendingRelations['children']->push($child);
             }
         } else {
             $this->children()->createMany($children);
