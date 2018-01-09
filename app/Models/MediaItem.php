@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Support\Collection;
 
 /** @mixin \Eloquent */
 class MediaItem extends Model
@@ -39,6 +40,8 @@ class MediaItem extends Model
         'updated_at',
     ];
 
+    protected $pendingRelations;
+
     public static function allTypes()
     {
         return [
@@ -59,6 +62,31 @@ class MediaItem extends Model
             self::showType,
             self::artistType,
         ];
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function (MediaItem $model) {
+            foreach ($model->pendingRelations as $name => $relation) {
+                if ($relation->count() > 0) {
+                    $model->setAttribute($name, $relation->toArray());
+                }
+            }
+
+            $model->save();
+        });
+    }
+
+    public function __construct(array $attributes = [])
+    {
+        $this->pendingRelations = [
+            "metaSources" => new Collection(),
+            "children" => new Collection(),
+        ];
+
+        parent::__construct($attributes);
     }
 
     public function children()
@@ -97,23 +125,23 @@ class MediaItem extends Model
 
     public function setMetaSourcesAttribute($metaSources)
     {
-        if ($this->isDirty()) {
-            $this->save();
-        }
-
-        foreach ($metaSources as $data) {
-            $this->metaSources()->create($data);
+        if (! $this->exists) {
+            foreach ($metaSources as $source) {
+                $this->pendingRelations["metaSources"]->push($source);
+            }
+        } else {
+            $this->metaSources()->createMany($metaSources);
         }
     }
 
     public function setChildrenAttribute($children)
     {
-        if ($this->isDirty()) {
-            $this->save();
-        }
-
-        foreach ($children as $data) {
-            $this->children()->create($data);
+        if (! $this->exists) {
+            foreach ($children as $child) {
+                $this->pendingRelations["children"]->push($child);
+            }
+        } else {
+            $this->children()->createMany($children);
         }
     }
 }

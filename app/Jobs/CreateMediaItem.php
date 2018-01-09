@@ -56,7 +56,7 @@ class CreateMediaItem implements ShouldQueue
 
         $mediaItem = MediaItem::create($mediaItemData);
 
-        \DB::rollBack();
+        \DB::commit();
 
 //        Todo: Fix duplicate key error from de DBMS
 
